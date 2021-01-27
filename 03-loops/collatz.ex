@@ -8,23 +8,27 @@ defmodule SecuneciaCollatz do
     r = (rem(n,2))
     if r == 0 do
       #Es par - se divide por dos
-      divide(n)
+      #divide(n)
+      valor = trunc(n/2)
+      secuencia(valor)
     else
       #Es impar- x3 + 1
-      multiplica(n)
+      #multiplica(n)
+      valor = trunc((n * 3 ) + 1)
+      secuencia(valor)
     end
 
   end
 
-  defp divide(n) do
-    valor = trunc(n/2)
-    secuencia(valor)
-  end
-
-  defp multiplica(n) do
-    valor = trunc((n * 3 ) + 1)
-    secuencia(valor)
-  end
+  #defp divide(n) do
+  #  valor = trunc(n/2)
+  #  secuencia(valor)
+  #end
+#
+  #defp multiplica(n) do
+  #  valor = trunc((n * 3 ) + 1)
+  #  secuencia(valor)
+  #end
 
 end
 
