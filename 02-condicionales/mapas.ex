@@ -23,3 +23,16 @@ IO.puts(map2 == map) #false
 
 map3 = Map.put(map2, :c, false)
 IO.puts(map2 == map3) #false
+
+#%{map | :c => "byte"} #Error porque :c no esta e el mapa
+map4 = %{map | :a => "byte"} #
+IO.puts(map4 == map) #false
+
+user = [
+  Frank: %{lastname: "Moreno", country: "Peru"},
+  #Frank: %{:lastname => "Moreno", country: => "Peru"}
+  Juan: %{lastname: "Meza", country: "Colombia"}
+]
+
+IO.puts(user[:Frank].lastname) #Moreno
+#user.frank  #Genera error
