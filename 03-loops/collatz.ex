@@ -31,4 +31,4 @@ defmodule SecuneciaCollatz do
 
 end
 
-IO.puts(SecuneciaCollatz.secuencia(18))
+IO.puts(SecuneciaCollatz.secuencia(578))
