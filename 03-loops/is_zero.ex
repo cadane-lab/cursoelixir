@@ -13,6 +13,4 @@ defmodule Zero do
 
 end
 
-Zero.is_zero(0)
-#Zero.is_zero(1)
-#IO.puts(Zero.is_zero(0))
+IO.puts(Zero.is_zero(1))
