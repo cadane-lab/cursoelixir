@@ -49,3 +49,45 @@ defmodule PuntoDos do
 end
 IO.puts("Punto dos: ")
 IO.inspect(PuntoDos.punto_dos(list))
+
+
+###############################################################
+defmodule PuntoTres do
+  def principal?(list) when is_list(list) do
+    principalp?(1, length(list), list)
+  end
+
+  defp principalp?(_, _, list) when list == [], do: :true
+
+  defp principalp?(i, n, list) do
+    v1 = Enum.at(list, i-1)
+    v2 = Enum.at(list, i)
+    #IO.puts("Compara #{v1} #{v2}")
+
+    cond do
+      i == n -> :true
+      v1 > v2 ->
+        principalp?(i+1, n, list)
+      v1 <= v2 ->
+         :false
+      end
+  end
+
+end
+list = [1, 2 ,3]
+IO.puts("Punto tres: ")
+IO.inspect(list)
+IO.puts(PuntoTres.principal?(list))
+
+######################################################
+defmodule PuntoCuatro do
+  def principal?(list) when is_list(list), do: principalp?(1, length(list), list)
+  defp principalp?(_, _, list) when list == [], do: :true
+
+  defp principalp?(i, n, list) when i == n, do: true
+
+end
+
+IO.puts("Punto cuatro: ")
+IO.inspect(list)
+IO.puts(PuntoCuatro.principal?(list))
