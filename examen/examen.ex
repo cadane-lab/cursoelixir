@@ -74,17 +74,18 @@ defmodule PuntoTres do
   end
 
 end
-list = [1, 2 ,3]
+list = [1, 2, 3]
 IO.puts("Punto tres: ")
 IO.inspect(list)
 IO.puts(PuntoTres.principal?(list))
 
 ######################################################
 defmodule PuntoCuatro do
-  def principal?(list) when is_list(list), do: principalp?(1, length(list), list)
-  defp principalp?(_, _, list) when list == [], do: :true
-
-  defp principalp?(i, n, list) when i == n, do: true
+  def principal?(list) when is_list(list), do: principalp?(1, length(list), list, Enum.at(list, 0), Enum.at(list, 1))
+  defp principalp?(_, _, list, _, _) when list == [], do: :true #Cuando la lista esta vacia
+  defp principalp?(i, n, _, v1, v2) when i == n and v1 > v2, do: true #Cuando se completa el ciclo
+  defp principalp?(i, n, list, v1, v2) when v1 > v2, do: principalp?(i+1, n, list, Enum.at(list, i-1), Enum.at(list, i)) #Vuelve y se llama
+  defp principalp?(_, _, _, v1, v2) when v1 <= v2, do: :false
 
 end
 
