@@ -39,13 +39,13 @@ IO.inspect(Examen.p1principal(list)) # [1, 4, 8, 7]
 defmodule PuntoDos do
   def punto_dos(list) when is_list(list), do: for_loopP2(0, length(list), 0, list, [])
   defp for_loopP2(_, _, _, [], newList), do: newList
-  defp for_loopP2(i, n, value, [h | t], newList) when i<=n, do: for_loopP2(i+1, n, value + h, t, newList ++ [value])
-  #defp for_loopP2(i, n, value, [h | t], newList) when i<=n do
-  #    value = value + h
-  #    list = t
-  #    newList = newList ++ [value]
-  #    for_loopP2(i+1, n, value, list, newList)
-  #end
+  #defp for_loopP2(i, n, value, [h | t], newList) when i<=n, do: for_loopP2(i+1, n, value + h, t, newList ++ [value])
+  defp for_loopP2(i, n, value, [h | t], newList) when i<=n do
+      value = value + h
+      list = t
+      newList = newList ++ [value]
+      for_loopP2(i+1, n, value, list, newList)
+  end
   defp for_loopP2(i, n, _, [_ | _], newList) when i > n, do: newList
 end
 IO.puts("Punto dos: ")
