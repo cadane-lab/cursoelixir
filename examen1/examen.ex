@@ -1,15 +1,6 @@
 defmodule Examen do
-  def p1principal(list) when is_list(list) do
-    vLength = length(list)
-    #IO.puts(list[h])
-    indice = Enum.at(list, 0)
-
-    for_loopP1(0, vLength, 0, list, [])
-
-  end
-
+  def p1principal(list) when is_list(list), do: for_loopP1(0, length(list), 0, list, [])
   defp for_loopP1(_, _, _, [], newList), do: newList
-
   defp for_loopP1(i, n, value, [h | t], newList) do
       cond do
       i <= n ->
@@ -26,8 +17,7 @@ defmodule Examen do
 end
 
 list = [1, 3, 4, -1]
-#IO.puts(hd(list))
-#IO.inspect(tl(list))
+#list = []
 IO.puts("Lista:")
 IO.inspect(list)
 IO.puts("Punto uno: ")
@@ -36,21 +26,32 @@ IO.inspect(Examen.p1principal([])) # [1, 4, 8, 7]
 IO.inspect(Examen.p1principal(list)) # [1, 4, 8, 7]
 #IO.inspect(Examen.p1principal(list)) # [1, 4, 8, 7]
 
+#defmodule PuntoDos do
+#  def punto_dos(list) when is_list(list), do: for_loopP2(0, length(list), 0, list, [])
+#  defp for_loopP2(_, _, _, [], newList), do: newList
+#  #defp for_loopP2(i, n, value, [h | t], newList) when i<=n, do: for_loopP2(i+1, n, value + h, t, newList ++ [value])
+#  defp for_loopP2(i, n, value, [h | t], newList) when i<=n do
+#      value = value + h
+#      list = t
+#      newList = newList ++ [value]
+#      for_loopP2(i+1, n, value, list, newList)
+#  end
+#  defp for_loopP2(i, n, _, [_ | _], newList) when i > n, do: newList
+#end
+#IO.puts("Punto dos: ")
+#IO.inspect(PuntoDos.punto_dos(list))
 defmodule PuntoDos do
-  def punto_dos(list) when is_list(list), do: for_loopP2(0, length(list), 0, list, [])
-  defp for_loopP2(_, _, _, [], newList), do: newList
-  #defp for_loopP2(i, n, value, [h | t], newList) when i<=n, do: for_loopP2(i+1, n, value + h, t, newList ++ [value])
-  defp for_loopP2(i, n, value, [h | t], newList) when i<=n do
-      value = value + h
-      list = t
-      newList = newList ++ [value]
-      for_loopP2(i+1, n, value, list, newList)
-  end
-  defp for_loopP2(i, n, _, [_ | _], newList) when i > n, do: newList
-end
-IO.puts("Punto dos: ")
-IO.inspect(PuntoDos.punto_dos(list))
+  def puntodos(list \\ []) when is_list(list), do: reduce(list, [], 0, &(&1 + &2))
+  ##################################
+  def reduce(list, newList, acc, sum) when is_function(sum,2), do:  reducep(list, newList, acc, sum)
+  def reducep([], newList, _, _), do: newList
+  def reducep([h | t],  newList, acc, sum),  do: reducep(t, newList ++ [sum.(acc, h)],sum.(acc, h), sum)
 
+end
+
+list = [1, 3, 4, -1]
+IO.puts("Punto dos")
+IO.inspect (PuntoDos.puntodos(list))
 
 ###############################################################
 defmodule PuntoTres do
