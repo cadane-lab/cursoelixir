@@ -1,63 +1,67 @@
 defmodule Obs do
-  @spec create(interger()) :: pid()
+  @spec create(integer()) :: pid()
   def create(initialState \\ 0) do
-    spawn(__MODULE__, :listen, [[], initialState])
+    spawn(__MODULE__,  :listen, [[], initialState])
+
   end
 
-  defp listen(observers, state) do
+  def  listen(observers, state) do
     receive do
-      event ->
-        {observers, state} = on_event(event, observers, state)
+     {:attach, observer_pid} ->
+     # new_observers = add_observer(observers, observer_pid)
+     # Listen(new_observers, state)
+     observers |> add_observer(observer_pid) |> listen(state)
+
+     {:detach, observer_pid} ->
+      # new_observers = remove_observer(observers, observer_pid)
+      # Listen(new_observers, state)
+      observers |> remove_observer(observer_pid) |> listen(state)
+
+      {:increment} ->
+        state = state + 1
+        notify(observers, state)
         listen(observers, state)
-      end
+
+      {:decrement} ->
+        state = state - 1
+        notify(observers, state)
+        listen(observers, state)
+
+      {:read, reader_pid} ->
+        send(reader_pid, state)
+        listen(observers, state)
+    end
   end
 
   def add_observer(observers, observer_pid), do: [observer_pid | observers]
-  def remove_observer(observer, observer_pid), do: observers -- [observer_pid]
+  def remove_observer(observers, observer_pid), do: observers -- [observer_pid]
 
-  defp notify(observer, state) do
-    #
-    #
-    observer |> Enum.each(&send(&1, state))
-    {observer, state}
+  def notify(observers, state) do
+    # Enum.each(observers, fn(obs_id) -> send(obs_pid, state) end)
+    # observers |> Enum.each(fn(obs_id) -> send(obs_pid, state) end)
+    observers |>Enum.each(&send(&1, state))
   end
 
-  def attach(subject), do: send(subject, [:attach, self()])
-  def detach(subject), do: send(subject, [:detach, self()])
-  #def increment(subject), do: send(subject, {:increment})
-  #def decrement(subject), do: send(subject, {:decrement})
+   def attach(subject), do: send(subject, {:attach, self()})
+   def detach(subject), do: send(subject, {:detach, self()})
+   def increment(subject), do: send(subject, {:increment})
+   def decrement(subject), do: send(subject, {:decrement})
 
-  def read(subject) do
+   def read(subject) do
     send(subject, {:read, self()})
     await()
-  end
+   end
 
-  def await(millis \\ 1000) do
+   def await(millis \\ 1000) do
     receive do
       count -> count
     after
       millis -> :timeout
     end
-
-  end
+   end
 end
-
-def on_event({:attach, observer_pid}, observer, state) do
-  {observer |> add_observer(observer_pid), state}
-end
-
-def on_event({:detach, observer_pid}, observers, state) do
-  {observers |> remove_observer(observer_pid), state}
-end
-
-def on_event({:read, reader_pid}, observers, state) do
-  send(reader_pid, state)
-  {observers, state}
-end
-
-## Extending
-def on_event({:increment}, observers, state), do: notify(observers, state + 1)
-def on_event({:decrement}, observers, state), do: notify(observers, state - 1)
-
-def increment(subject), do: send(subject, {:increment})
-def decrement(subject), do: send(subject, {:decrement})
+# suject = %Observable{pid: subject_pid}
+# subject.attach(pid)
+# subject.attach()
+# subject.detach(pid)
+# subject.detach()

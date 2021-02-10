@@ -23,24 +23,24 @@ Observable.increment(subject)
 IO.puts(Observable.await())
 
 #IO.puts("------------------------------")
-#subject = FObs.create()
+#subject = Obs.create()
 #
-#IO.puts(FObs.read(subject))
+#IO.puts(Obs.read(subject))
 #
-#FObs.attach(subject)
+#Obs.attach(subject)
 #
-#FObs.increment(subject)
-#IO.puts(FObs.await())
+#Obs.increment(subject)
+#IO.puts(Obs.await())
 #
-#FObs.increment(subject)
-#IO.puts(FObs.await())
+#Obs.increment(subject)
+#IO.puts(Obs.await())
 #
-#FObs.decrement(subject)
-#IO.puts(FObs.await())
+#Obs.decrement(subject)
+#IO.puts(Obs.await())
 #
-#FObs.increment(subject)
-#IO.puts(FObs.await())
+#Obs.increment(subject)
+#IO.puts(Obs.await())
 #
-#FObs.detach(subject)
-#FObs.increment(subject)
-#IO.puts(FObs.await())
+#Obs.detach(subject)
+#Obs.increment(subject)
+#IO.puts(Obs.await())

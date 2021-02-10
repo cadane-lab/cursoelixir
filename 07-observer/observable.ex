@@ -1,5 +1,5 @@
 defmodule Observable do
-  @spec create(interger()) :: pid()
+  #@spec create(interger()) :: pid()
   def create(initialState \\ 0) do
     spawn(__MODULE__, :listen, [[], initialState])
   end
@@ -33,7 +33,7 @@ defmodule Observable do
   end
 
   def add_observer(observers, observer_pid), do: [observer_pid | observers]
-  def remove_observer(observer, observer_pid), do: observers -- [observer_pid]
+  def remove_observer(observers, observer_pid), do: observers -- [observer_pid]
 
   defp notify(observer, state) do
     #
