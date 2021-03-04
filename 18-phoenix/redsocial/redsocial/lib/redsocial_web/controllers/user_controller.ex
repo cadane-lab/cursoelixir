@@ -5,9 +5,9 @@ defmodule RedsocialWeb.UserController do
     render(conn, "index.html")
   end
 
-  def show(%Plug.Conn{query_params: query_params} = conn, %{"accion" => messenger}) do
+  def show(%Plug.Conn{query_params: query_params} = conn, %{"accion" => accion}) do
 
-    respuesta = case messenger do
+    respuesta = case accion do
       "crear" ->
         nombre = query_params["nombre"]
         mail = query_params["mail"]
@@ -20,8 +20,18 @@ defmodule RedsocialWeb.UserController do
       "amistad" ->
         user1 = query_params["user1"]
         user2 = query_params["user2"]
+
+        user1 = String.to_integer(user1)
+        user2 = String.to_integer(user2)
+
         Redsocial.amistad(user1, user2)
         %{estado: "Ok"}
+        "listar" ->
+          user = query_params["user"]
+          user = String.to_integer(user)
+          amigos = Redsocial.listarAmigos(user)
+
+          lista = Enum.map(amigos, fn amigos -> %{id: amigos.id, nombre: amigos.nombre, mail: amigos.mail} end)
         _ -> %{novalue: "no function"}
       end
 

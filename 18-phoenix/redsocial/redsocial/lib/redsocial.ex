@@ -95,6 +95,19 @@ defmodule Redsocial do
     result = Redsocial.Repo.all(query)
   end
 
+  def listarAmigos(usuario) do
+    #select * from user_user uu
+    #left join users u2 on uu.user2 = u2.id
+    #where uu.user_id = '1'
+    query =
+      from uu in Red.Amistad,
+      join: u2 in Red.Usuarios, on: uu.user2 == u2.id,
+      where: uu.user_id == ^usuario,
+      select: u2
+
+    result = Redsocial.Repo.all(query)
+  end
+
   defp insertarData(datos) do
     Redsocial.Repo.insert(datos)
   end
