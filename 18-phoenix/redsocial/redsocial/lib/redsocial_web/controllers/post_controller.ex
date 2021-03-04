@@ -5,19 +5,20 @@ defmodule RedsocialWeb.PostController do
     render(conn, "index.html")
   end
 
-  def show(%Plug.Conn{query_params: query_params} = conn, %{"messenger" => messenger}) do
-    respuesta = case messenger do
+  def show(%Plug.Conn{query_params: query_params} = conn, %{"accion" => accion}) do
+    respuesta = case accion do
       "leer" ->
         usuario = query_params["user"]
         pagina = query_params["pg"]
         nrow = query_params["nrow"]
+
+        usuario = String.to_integer(usuario)
         pagina = String.to_integer(pagina)
+        nrow = String.to_integer(nrow)
 
         post = Redsocial.leerPost(usuario, pagina, nrow)
-        lista = Enum.map(post, fn post -> %{texto: post.texto} end)
-        #valor1 = Enum.at(lista, 1)
-        #%{texto: valor1.texto, autor: valor1.autor.nombre}
-    end
+        lista = Enum.map(post, fn post -> %{id: post.id, texto: post.texto, autor: post.autor.nombre} end)
+      end
     #html(conn, respuesta)
     json(conn, respuesta)
   end

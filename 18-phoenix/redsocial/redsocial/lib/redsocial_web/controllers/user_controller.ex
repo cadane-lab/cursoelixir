@@ -16,9 +16,14 @@ defmodule RedsocialWeb.UserController do
       "leer" ->
         userId = query_params["user"]
         user = Redsocial.leerUsuario(userId)
-        lista = Enum.map(user, fn user -> %{user.nombre} end)
-        #%{id: user.id, nombre: user.nombre, mail: user.mail}
-    end
+        lista = Enum.map(user, fn user -> %{id: user.id, nombre: user.nombre, mail: user.mail} end)
+      "amistad" ->
+        user1 = query_params["user1"]
+        user2 = query_params["user2"]
+        Redsocial.amistad(user1, user2)
+        %{estado: "Ok"}
+        _ -> %{novalue: "no function"}
+      end
 
 
     #html(conn, respuesta)

@@ -21,10 +21,8 @@ defmodule RedsocialWeb.Router do
     get "/redsocial", PageController, :index
     #resources "/hello", HelloController, only: [:index, :show]
     #resources "/redsocial/listaramigos/:messenger", PostController, [:index, :show]
-    get "/redsocial/post/leer", PostController, :index
+    get "/redsocial/posts/:accion", PostController, :show
     resources  "/redsocial/post/crear", PostController, only: [:create]
-    #get "/redsocial/user/:accion", UserController, :individual
-    #get "/redsocial/user/:accion", UserController, :show
     get "/redsocial/user/:accion", UserController, :show
   end
 

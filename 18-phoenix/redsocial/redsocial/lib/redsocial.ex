@@ -90,7 +90,7 @@ defmodule Redsocial do
     query =
       from u in Red.Usuarios,
       where: u.id == ^usuario,
-      select: {u}
+      select: u
 
     result = Redsocial.Repo.all(query)
   end
